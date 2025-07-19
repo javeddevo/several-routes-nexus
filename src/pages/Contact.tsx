@@ -193,9 +193,11 @@ const Contact = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                  <div className="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold">
-                    JM
-                  </div>
+                  <img 
+                    src="/lovable-uploads/bf878b5b-d49a-4d61-978b-25b279a22a6d.png" 
+                    alt="Jesse Miller - Founder & Lead Consultant"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-primary/20"
+                  />
                   <div className="flex-1">
                     <h3 className="text-xl font-semibold text-foreground mb-2">
                       Jesse Miller
