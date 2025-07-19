@@ -1,9 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BookOpen, Calendar, Clock, ExternalLink } from 'lucide-react';
+import { useState } from 'react';
 
 const Publications = () => {
-  // Mock publications data (would come from Notion API in real implementation)
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Mock publications data (will be replaced with Notion API)
+  // TODO: Replace with Notion API integration
   const publications = [
     {
       id: 1,
@@ -71,6 +75,17 @@ const Publications = () => {
     });
   };
 
+  const handleReadMore = (publication: any) => {
+    // TODO: Navigate to full article or open modal
+    // For now, we'll open in a new tab (can be replaced with routing)
+    console.log('Opening publication:', publication.title);
+    // You can add navigation logic here when you have full articles
+  };
+
+  const filteredPublications = selectedCategory === 'All' 
+    ? publications 
+    : publications.filter(pub => pub.category === selectedCategory);
+
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,8 +105,9 @@ const Publications = () => {
           {categories.map((category) => (
             <Button
               key={category}
-              variant="outline"
+              variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
+              onClick={() => setSelectedCategory(category)}
               className="hover:bg-primary hover:text-primary-foreground transition-colors"
             >
               {category}
@@ -106,7 +122,7 @@ const Publications = () => {
             Featured Articles
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {publications.filter(pub => pub.featured).map((publication) => (
+            {filteredPublications.filter(pub => pub.featured).map((publication) => (
               <Card key={publication.id} className="group hover:shadow-elegant transition-all duration-300 hover:scale-105 shadow-card">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
@@ -131,7 +147,12 @@ const Publications = () => {
                       <Clock className="h-3 w-3 mr-1" />
                       {publication.readTime}
                     </div>
-                    <Button size="sm" variant="ghost" className="group-hover:text-primary">
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="group-hover:text-primary"
+                      onClick={() => handleReadMore(publication)}
+                    >
                       Read More
                       <ArrowRight className="ml-2 h-3 w-3" />
                     </Button>
@@ -148,8 +169,12 @@ const Publications = () => {
             All Publications
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {publications.map((publication) => (
-              <Card key={publication.id} className="group hover:shadow-card transition-all duration-300 hover:scale-105 border-border/50">
+            {filteredPublications.map((publication) => (
+              <Card 
+                key={publication.id} 
+                className="group hover:shadow-card transition-all duration-300 hover:scale-105 border-border/50 cursor-pointer"
+                onClick={() => handleReadMore(publication)}
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
